@@ -25,6 +25,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -62,8 +63,13 @@ export default {
     theme: {
       dark: false,
       themes: {
+        light: {
+          primary: '#00D1B2',
+          secondary: '#b0bec5',
+          accent: '#8c9eff',
+          error: '#b71c1c'
+        },
         dark: {
-          primary: colors.blue.darken2,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,

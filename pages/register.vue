@@ -6,24 +6,33 @@
           <v-container class="elevation-12 white redon">
             <v-row>
               <v-col md="6">
-                <img src="~/assets/undraw_log.svg" class="log">
+                <img src="~/assets/undraw_reg.svg" class="reg">
               </v-col>
               <v-col md="6">
                 <v-container>
-                  <h1>Login</h1>
+                  <h1>Registro</h1>
                   <v-form>
+                    <v-text-field label="Nombre" name="nombre" type="text" />
                     <v-text-field label="Email" name="login" type="text" />
                     <v-text-field
+                      id="password"
                       label="Password"
                       name="password"
                       type="password"
                     />
+                    <v-text-field
+                      id="password"
+                      label="Repeat Password"
+                      name="password"
+                      type="password"
+                    />
+                    <v-checkbox label="Acepto los términos y condiciones" />
                     <v-container class="text-center">
-                      <v-btn outlined large color="primary">
-                        LOG IN
+                      <v-btn outlined large color="orange">
+                        ENVIAR
                       </v-btn>
                       <p class="text--secondary pb-0 pt-4">
-                        O regístrate <nuxt-link to="/register">
+                        ¿Tienes cuenta? Inicia sesión <nuxt-link to="/">
                           aquí
                         </nuxt-link>
                       </p>
@@ -40,9 +49,9 @@
 </template>
 <style scoped>
 .fondo{
-background: linear-gradient(45deg, rgba(46,191,145,1) 0%, rgba(131,96,195,1) 100%);
+background: linear-gradient(45deg, #ee0979 0%, #ff6a00 100%);
 }
-.log{
+.reg{
     width: 100%;
     height: 100%;
 }
