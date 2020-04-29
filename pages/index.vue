@@ -11,15 +11,16 @@
               <v-col md="6">
                 <v-container>
                   <h1>Login</h1>
-                  <v-form>
-                    <v-text-field label="Email" name="login" type="text" />
+                  <v-form @submit.prevent="login">
+                    <v-text-field v-model="email" label="Email" name="login" type="text" />
                     <v-text-field
+                      v-model="password"
                       label="Password"
                       name="password"
                       type="password"
                     />
                     <v-container class="text-center">
-                      <v-btn outlined large color="primary">
+                      <v-btn type="sumbit" outlined large color="primary">
                         LOG IN
                       </v-btn>
                       <p class="text--secondary pb-0 pt-4">
@@ -38,6 +39,33 @@
     </v-container>
   </v-content>
 </template>
+<script>
+import { mapActions } from 'vuex'
+export default {
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    ...mapActions(['guardarUsuario']),
+
+    login () {
+      this.$axios.post('/auth', { email: this.email, password: this.password })
+        .then((res) => {
+          const token = res.data.token
+          this.guardarUsuario(token)
+          this.$router.push({ name: 'dashboard' })
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(err.response.data.msg)
+        })
+    }
+  }
+}
+</script>
 <style scoped>
 .fondo{
 background: linear-gradient(45deg, rgba(46,191,145,1) 0%, rgba(131,96,195,1) 100%);

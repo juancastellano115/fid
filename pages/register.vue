@@ -11,11 +11,12 @@
               <v-col md="6">
                 <v-container>
                   <h1>Registro</h1>
-                  <v-form>
-                    <v-text-field label="Nombre" name="nombre" type="text" />
-                    <v-text-field label="Email" name="login" type="text" />
+                  <v-form @submit.prevent="login">
+                    <v-text-field v-model="nombre" label="Nombre" name="nombre" type="text" />
+                    <v-text-field v-model="email" label="Email" name="login" type="text" />
                     <v-text-field
                       id="password"
+                      v-model="password"
                       label="Password"
                       name="password"
                       type="password"
@@ -28,7 +29,7 @@
                     />
                     <v-checkbox label="Acepto los términos y condiciones" />
                     <v-container class="text-center">
-                      <v-btn outlined large color="orange">
+                      <v-btn type="sumbit" outlined large color="orange">
                         ENVIAR
                       </v-btn>
                       <p class="text--secondary pb-0 pt-4">
@@ -47,6 +48,33 @@
     </v-container>
   </v-content>
 </template>
+<script>
+import { mapActions } from 'vuex'
+export default {
+  data () {
+    return {
+      nombre: '',
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    ...mapActions(['guardarUsuario']),
+
+    login () {
+      this.$axios.post('/usuarios', { nombre: this.nombre, email: this.email, password: this.password })
+        .then((res) => {
+          const token = res.data.token
+          this.guardarUsuario(token)
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(err.response.data.msg)
+        })
+    }
+  }
+}
+</script>
 <style scoped>
 .fondo{
 background: linear-gradient(45deg, #ee0979 0%, #ff6a00 100%);
