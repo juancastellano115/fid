@@ -6,34 +6,25 @@
           <v-container class="elevation-12 white redon">
             <v-row>
               <v-col md="6">
-                <img src="~/assets/undraw_reg.svg" class="reg">
+                <img src="~/assets/undraw_log.svg" class="log">
               </v-col>
               <v-col md="6">
                 <v-container>
-                  <h1>Registro</h1>
-                  <v-form @submit.prevent="register">
-                    <v-text-field v-model="nombre" label="Nombre" name="nombre" type="text" />
+                  <h1>Login</h1>
+                  <v-form @submit.prevent="login">
                     <v-text-field v-model="email" label="Email" name="login" type="text" />
                     <v-text-field
-                      id="password"
                       v-model="password"
                       label="Password"
                       name="password"
                       type="password"
                     />
-                    <v-text-field
-                      id="password"
-                      label="Repeat Password"
-                      name="password"
-                      type="password"
-                    />
-                    <v-checkbox label="Acepto los términos y condiciones" />
                     <v-container class="text-center">
-                      <v-btn type="sumbit" outlined large color="orange">
-                        ENVIAR
+                      <v-btn type="sumbit" outlined large color="primary">
+                        LOG IN
                       </v-btn>
                       <p class="text--secondary pb-0 pt-4">
-                        ¿Tienes cuenta? Inicia sesión <nuxt-link to="/login">
+                        O regístrate <nuxt-link to="/register">
                           aquí
                         </nuxt-link>
                       </p>
@@ -49,20 +40,20 @@
   </v-content>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   middleware: 'guest',
   data () {
     return {
-      nombre: '',
       email: '',
       password: ''
     }
   },
   methods: {
-    async register () {
-      try {
-        await this.$axios.post('/usuarios', { nombre: this.nombre, email: this.email, password: this.password })
+    ...mapActions(['guardarUsuario']),
 
+    async login () {
+      try {
         await this.$auth.loginWith('local', {
           data: {
             email: this.email,
@@ -70,10 +61,10 @@ export default {
           }
         })
 
-        this.$router.push('/foto')
+        this.$router.push('/')
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.log(e.response.data.msg)
+        console.log(e)
       }
     }
   }
@@ -81,9 +72,9 @@ export default {
 </script>
 <style scoped>
 .fondo{
-background: linear-gradient(45deg, #ee0979 0%, #ff6a00 100%);
+background: linear-gradient(45deg, rgba(46,191,145,1) 0%, rgba(131,96,195,1) 100%);
 }
-.reg{
+.log{
     width: 100%;
     height: 100%;
 }

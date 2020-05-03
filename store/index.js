@@ -1,38 +1,29 @@
 import decode from 'jwt-decode'
 
 export const state = () => ({
-  token: '',
-  usuarioDB: ''
+  UserID: '',
+  token: ''
 })
 
 export const mutations = {
   obtenerUsuario (state, payload) {
     state.token = payload
     if (payload === '') {
-      state.usuarioDB = ''
+      state.UserID = ''
     } else {
-      state.usuarioDB = decode(payload)
-      // this.$router.push({ name: 'dashboard' })
+      state.UserID = decode(payload)
     }
   }
 }
 export const actions = {
 
-  guardarUsuario ({ commit }, payload) {
-    localStorage.setItem('token', payload)
-    commit('obtenerUsuario', payload)
+}
+export const getters = {
+  isAuthenticated (state) {
+    return state.auth.loggedIn
   },
-  cerrarSesion ({ commit }) {
-    commit('obtenerUsuario', '')
-    localStorage.removeItem('token')
-    // router.push({ name: 'login' })
-  },
-  leerToken ({ commit }) {
-    const token = localStorage.getItem('token')
-    if (token) {
-      commit('obtenerUsuario', token)
-    } else {
-      commit('obtenerUsuario', '')
-    }
+
+  loggedInUser (state) {
+    return state.auth.user
   }
 }

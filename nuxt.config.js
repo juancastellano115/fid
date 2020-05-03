@@ -46,7 +46,9 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/auth',
+    'nuxt-sweetalert2'
   ],
   /*
   ** Axios module configuration
@@ -54,6 +56,19 @@ export default {
   */
   axios: {
     baseURL: 'http://localhost:4000/api'
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'auth', method: 'post', propertyName: 'token' },
+          user: { url: 'usuarios/me', method: 'get', propertyName: 'data' },
+          logout: false
+        },
+        tokenType: '',
+        tokenName: 'x-auth-token'
+      }
+    }
   },
   /*
   ** vuetify module configuration

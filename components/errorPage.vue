@@ -4,7 +4,7 @@
     <h1 class="ml3">
       ¡Vaya! Parece que te has perdido
     </h1>
-    <v-btn x-large outlined color="primary" class="mt-10">
+    <v-btn x-large color="primary" class="mt-10">
       <NuxtLink to="/">
         VOLVER
       </NuxtLink>
@@ -65,9 +65,6 @@ export default {
 }
 </script>
 <style scoped>
-a {
-  text-decoration: none;
-}
 .ml3 {
   font-weight: 900;
   font-size: 3.5em;

@@ -1,80 +1,86 @@
 <template>
-  <v-content>
-    <v-container class="fill-height fondo" fluid>
-      <v-row align="center" justify="center">
-        <v-col sm="8" md="6">
-          <v-container class="elevation-12 white redon">
-            <v-row>
-              <v-col md="6">
-                <img src="~/assets/undraw_log.svg" class="log">
-              </v-col>
-              <v-col md="6">
-                <v-container>
-                  <h1>Login</h1>
-                  <v-form @submit.prevent="login">
-                    <v-text-field v-model="email" label="Email" name="login" type="text" />
-                    <v-text-field
-                      v-model="password"
-                      label="Password"
-                      name="password"
-                      type="password"
-                    />
-                    <v-container class="text-center">
-                      <v-btn type="sumbit" outlined large color="primary">
-                        LOG IN
-                      </v-btn>
-                      <p class="text--secondary pb-0 pt-4">
-                        O regístrate <nuxt-link to="/register">
-                          aquí
-                        </nuxt-link>
-                      </p>
-                    </v-container>
-                  </v-form>
-                </v-container>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-content>
+  <div class="text-center">
+    <v-row class="pl-5 grey lighten-5">
+      <v-col lg="5" sm="12">
+        <v-text-field
+          class="mt-3"
+          color="primary"
+          append-icon="mdi-magnify"
+          solo
+          clearable
+          placeholder="¿Qué te apetece comer hoy?"
+        />
+      </v-col>
+      <v-col lg="2" sm="12">
+        <v-autocomplete
+          loading="false"
+          :items="provincias"
+          cache-items
+          class="mx-4 mt-3"
+          flat
+          hide-no-data
+          hide-details
+          label="¿En dónde?"
+          solo-inverted=""
+        />
+      </v-col>
+    </v-row>
+    <section>
+      <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 42.65"><defs><style>.cls-1{fill:#FAFAFA;}</style></defs><title>Sin título-3</title><path class="cls-1" d="M-.5,22.5a1114.63,1114.63,0,0,0,274,19c96.48-5.27,134.92-20.06,233-26,100.42-6.08,110,6.41,292,18,242,15.42,399.38,4.45,444,1,66.6-5.14,121.1-12,157-17V.5H-.5Z" transform="translate(0.5 -0.5)" /></svg>
+    </section>
+    <v-row>
+      <v-col cols="12">
+        <div class="d-flex justify-center">
+          <v-btn
+            bottom
+            fixed
+            dark
+            rounded
+            x-large
+            color="teal accent-3"
+            to="/crear"
+            nuxt
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
+
 <script>
-import { mapActions } from 'vuex'
 export default {
+  layout: 'principal',
+  middleware: 'auth',
   data () {
     return {
-      email: '',
-      password: ''
-    }
-  },
-  methods: {
-    ...mapActions(['guardarUsuario']),
-
-    login () {
-      this.$axios.post('/auth', { email: this.email, password: this.password })
-        .then((res) => {
-          const token = res.data.token
-          this.guardarUsuario(token)
-          this.$router.push({ name: 'dashboard' })
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.log(err.response.data.msg)
-        })
+      provincias: ['Madrid', 'Guadalajara']
     }
   }
 }
 </script>
 <style scoped>
-.fondo{
-background: linear-gradient(45deg, rgba(46,191,145,1) 0%, rgba(131,96,195,1) 100%);
+a {
+  text-decoration: none;
 }
-.log{
-    width: 100%;
-    height: 100%;
+/* unvisited link */
+a:link {
+  color: rgb(255, 255, 255);
 }
-.redon{
-    border-bottom-right-radius: 80px;
+
+/* visited link */
+a:visited {
+  color: rgb(255, 255, 255);
+}
+
+/* mouse over link */
+a:hover {
+  color: rgb(255, 255, 255);
+}
+
+/* selected link */
+a:active {
+  color: rgb(255, 255, 255);
 }
 </style>
