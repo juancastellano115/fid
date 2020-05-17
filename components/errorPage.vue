@@ -69,4 +69,8 @@ export default {
   font-weight: 900;
   font-size: 3.5em;
 }
+a{
+  color: white;
+  text-decoration: none;
+}
 </style>

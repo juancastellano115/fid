@@ -1,18 +1,11 @@
-import decode from 'jwt-decode'
 
 export const state = () => ({
-  UserID: '',
-  token: ''
+  ciudad: ''
 })
 
 export const mutations = {
-  obtenerUsuario (state, payload) {
-    state.token = payload
-    if (payload === '') {
-      state.UserID = ''
-    } else {
-      state.UserID = decode(payload)
-    }
+  guardarciudad (state, payload) {
+    state.ciudad = payload
   }
 }
 export const actions = {

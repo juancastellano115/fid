@@ -5,19 +5,20 @@
         <v-col sm="8" md="6">
           <v-container class="elevation-12 white redon">
             <v-row>
-              <v-col md="6">
+              <v-col md="6" class="d-none d-md-flex">
                 <img src="~/assets/undraw_log.svg" class="log">
               </v-col>
               <v-col md="6">
                 <v-container>
                   <h1>Login</h1>
-                  <v-form @submit.prevent="login">
-                    <v-text-field v-model="email" label="Email" name="login" type="text" />
+                  <v-form v-model="valid" @submit.prevent="login">
+                    <v-text-field v-model="email" label="Email" name="login" type="text" :rules="emailRules" />
                     <v-text-field
                       v-model="password"
                       label="Password"
                       name="password"
                       type="password"
+                      :rules="passwordRules"
                     />
                     <v-container class="text-center">
                       <v-btn type="sumbit" outlined large color="primary">
@@ -40,31 +41,46 @@
   </v-content>
 </template>
 <script>
-import { mapActions } from 'vuex'
 export default {
   middleware: 'guest',
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      emailRules: [
+        v => !!v || 'El E-mail es obligatorio',
+        v => /.+@.+/.test(v) || 'El E-mail debe ser válido'
+      ],
+      passwordRules: [
+        v => !!v || 'La contraseña es obligatoria'
+      ],
+      valid: true
     }
   },
   methods: {
-    ...mapActions(['guardarUsuario']),
 
     async login () {
-      try {
-        await this.$auth.loginWith('local', {
-          data: {
-            email: this.email,
-            password: this.password
-          }
-        })
+      if (this.valid) {
+        try {
+          await this.$auth.loginWith('local', {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          })
 
-        this.$router.push('/')
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
+          this.$router.push('/')
+        } catch (e) {
+          this.$swal({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            type: 'error',
+            title: 'Contraseña o usuario incorrectos'
+          })
+        }
       }
     }
   }
