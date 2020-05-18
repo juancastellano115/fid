@@ -2,7 +2,7 @@
   <v-content>
     <v-container fluid>
       <v-row justify="center" class="expand">
-        <v-col cols="3">
+        <v-col cols="12" md="3">
           <v-card
             max-width="450"
             class="mx-auto"
@@ -14,7 +14,7 @@
               <v-toolbar-title>Mensajes</v-toolbar-title>
               <v-spacer />
             </v-toolbar>
-            <v-list three-line>
+            <v-list v-if="items.length > 0" three-line>
               <template v-for="(item, index) in items">
                 <v-list-item
                   :key="item.createdAt"
@@ -40,6 +40,9 @@
                 </v-list-item>
               </template>
             </v-list>
+            <p v-else class="text--primary text-center pa-3">
+              ¡Aún no tienes conversaciones!
+            </p>
           </v-card>
         </v-col>
         <v-col cols="9">

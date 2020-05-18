@@ -22,7 +22,7 @@
               />
               <v-card-title>{{ card.nombre }}<strong> &nbsp;{{ card.precio }}€ </strong></v-card-title>
               <v-card-text class="text--primary">
-                <p class="text-justify">
+                <p class="text-left">
                   {{ card.desc }}
                 </p>
               </v-card-text>

@@ -15,10 +15,7 @@
       </client-only>
       <v-row>
         <v-col cols="12" md="4">
-          <v-card
-            class="mx-auto"
-            max-width="344"
-          >
+          <v-card class="mx-auto" max-width="344">
             <v-card-text>
               <p class="display-1 text--primary">
                 Número de artículos totales
@@ -30,10 +27,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" md="4">
-          <v-card
-            class="mx-auto"
-            max-width="344"
-          >
+          <v-card class="mx-auto" max-width="344">
             <v-card-text>
               <p class="display-1 text--primary">
                 Usuario con más estrellas
@@ -46,7 +40,8 @@
                 </v-col>
                 <v-col>
                   <h1 class="text-center text--primary">
-                    <v-icon>mdi-star</v-icon> {{ estadisticas.usuarioConMasEstrellas.likes }}
+                    <v-icon>mdi-star</v-icon>
+                    {{ estadisticas.usuarioConMasEstrellas.likes }}
                   </h1>
                 </v-col>
                 <v-col class="text-center">
@@ -61,10 +56,7 @@
           </v-card>
         </v-col>
         <v-col cols="12" md="4">
-          <v-card
-            class="mx-auto"
-            max-width="344"
-          >
+          <v-card class="mx-auto" max-width="344">
             <v-card-text>
               <p class="display-1 text--primary">
                 Número de usuarios totales
@@ -88,10 +80,15 @@
       <h3>Borrar Usuario por Email</h3>
       <v-row>
         <v-col cols="12" md="2">
-          <v-text-field v-model="usuario" outlined placeholder="Selecciona un usuario" @change="seleccionarUser" />
+          <v-text-field
+            v-model="usuario"
+            outlined
+            placeholder="Selecciona un usuario"
+            @change="seleccionarUser"
+          />
         </v-col>
         <v-col>
-          <v-btn dark x-large color="red">
+          <v-btn dark x-large color="red" @click="borrarUser">
             BORRAR
           </v-btn>
         </v-col>
@@ -100,10 +97,7 @@
       <v-row>
         <v-col cols="12" md="4">
           <v-list v-if="articulosdeusuario.length !== 0">
-            <v-list-item
-              v-for="(item, index) in articulosdeusuario"
-              :key="item._id"
-            >
+            <v-list-item v-for="(item, index) in articulosdeusuario" :key="item._id">
               <v-list-item-content>
                 <v-list-item-title v-text="item.nombre" />
                 <v-list-item-subtitle v-text="item.desc" />
@@ -135,10 +129,14 @@
       <h3>Hacer usuario admin</h3>
       <v-row>
         <v-col cols="12" md="2">
-          <v-text-field v-model="usuarioParaAdmin" outlined placeholder="Selecciona un usuario" @change="seleccionarUser" />
+          <v-text-field
+            v-model="usuarioParaAdmin"
+            outlined
+            placeholder="Selecciona un usuario"
+          />
         </v-col>
         <v-col>
-          <v-btn dark x-large color="primary">
+          <v-btn dark x-large color="primary" @click="hacerAdmin">
             ADMIN
           </v-btn>
         </v-col>
@@ -199,16 +197,29 @@ export default {
   },
   methods: {
     async seleccionarUser () {
-      this.articulosdeusuario = await this.$axios.$post('/articulos/admin/articulosByEmail', { email: this.usuario })
+      try {
+        this.articulosdeusuario = await this.$axios.$post(
+          '/articulos/admin/articulosByEmail',
+          { email: this.usuario }
+        )
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error.response.data)
+      }
     },
     async borrarArticulo (index) {
-      const resp = await this.$axios.delete('/articulos/' + this.articulosdeusuario[index]._id)
+      const resp = await this.$axios.delete(
+        '/articulos/' + this.articulosdeusuario[index]._id
+      )
       if (resp.status === 200) {
         this.$swal({
           title: 'Artículo borrado',
           type: 'success'
         })
-        this.articulosdeusuario = this.articulosdeusuario.slice(index, index - 1)
+        this.articulosdeusuario = this.articulosdeusuario.slice(
+          index,
+          index - 1
+        )
       } else {
         this.$swal({
           title: 'Hubo un error',
@@ -226,12 +237,60 @@ export default {
         this.estadisticas.mejoresUsuarios.forEach((user) => {
           bodyTabla.push(Object.values(user))
         })
+        const img = new Image()
+        img.src = '/fidlogo.png'
+        doc.addImage(img, 'png', 14, 0, 30, 30)
+        doc.text('Estadísticas Fid!', 14, 30)
+
+        doc.text('Artículos totales: ' + this.estadisticas.numArticulos, 14, 50)
+        doc.line(14, 60, 60, 60)
+        doc.text('Usuarios totales: ' + this.estadisticas.numUsuarios, 14, 70)
+        doc.line(14, 80, 60, 80)
+        doc.text('Mejores usuarios: ', 14, 90)
         doc.autoTable({
-          head: [['Nombre', 'Email', 'Género', 'Likes', 'Rol', 'Registro']],
-          body: bodyTabla
+          head: [['Likes', 'Rol', 'Nombre', 'Email', 'Género', 'Registro']],
+          body: bodyTabla,
+          startY: 100
         })
-        doc.text('Estadísticas Fid!', 10, 10)
+        doc.text('Fid 2020 ©', 14, 200)
         doc.save('estadisticas.pdf')
+      }
+    },
+    async borrarUser () {
+      try {
+        const resp = await this.$axios.post('/usuarios/admin/borrar', {
+          email: this.usuario
+        })
+        if (resp.status === 200) {
+          this.articulosdeusuario = []
+          this.$swal({
+            title: 'Usuario borrado',
+            type: 'success'
+          })
+        }
+      } catch (error) {
+        this.$swal({
+          title: 'Error al borrar ese usuario',
+          text: error.response.data.msg,
+          type: 'error'
+        })
+      }
+    },
+    async hacerAdmin () {
+      try {
+        await this.$axios.$post('usuarios/admin/make', {
+          email: this.usuarioParaAdmin
+        })
+        this.$swal({
+          title: 'Ahora este usuario es administrador',
+          type: 'success'
+        })
+      } catch (error) {
+        this.$swal({
+          title: 'Error al hacer admin ese usuario',
+          text: error.response.data.msg,
+          type: 'error'
+        })
       }
     }
   }
