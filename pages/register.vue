@@ -97,8 +97,11 @@ export default {
           this.$router.push('/foto')
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e.response.data.msg)
+        this.$swal({
+          title: 'Error en el registro',
+          text: e.response.data.msg,
+          type: 'error'
+        })
       }
     }
   }

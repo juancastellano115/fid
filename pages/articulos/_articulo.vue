@@ -2,19 +2,16 @@
   <div>
     <div>
       <v-row>
-        <v-col sm="12" md="6" offset-sm="3">
-          <v-card class="grey lighten-4 pa-3 ma-5" elevation="20">
+        <v-col cols="12" md="6" offset-sm="3">
+          <v-card class="grey lighten-4 pa-3 ma-sm-0 ma-md-5" elevation="20">
             <v-container fluid>
-              <v-carousel
-                cycle
-                height="500"
-                hide-delimiter-background
-                show-arrows-on-hover
-              >
+              <v-carousel cycle hide-delimiter-background show-arrows-on-hover>
                 <v-carousel-item
                   v-for="(foto, i) in objetodatos.articulo.fotos"
                   :key="i"
-                  :src="`http://localhost:4000/resources/products/${foto}?width=1000&height=800`"
+                  :src="
+                    `http://localhost:4000/resources/products/${foto}?width=1000&height=800`
+                  "
                 />
               </v-carousel>
               <v-row class="text-center justify-center">
@@ -34,7 +31,10 @@
                   {{ objetodatos.articulo.desc }}
                 </v-card-text>
               </v-card>
-              <div class="d-flex justify-center mt-10">
+              <div
+                v-if="objetodatos.propietario._id !== this.$auth.user._id"
+                class="d-flex justify-center mt-10"
+              >
                 <v-btn
                   dark
                   rounded
@@ -47,10 +47,16 @@
                   </v-icon>
                 </v-btn>
               </div>
-              <v-row justify="center" class="ma-8">
-                <v-col cols="4">
-                  <div v-if="objetodatos.articulo.alergenos.length > 0" class="d-flex justify-space-around rounded grey lighten-3 alergenos">
-                    <v-icon v-for="alergeno in objetodatos.articulo.alergenos" :key="alergeno">
+              <v-row justify="center" class="ma-sm-5 ma-md-8">
+                <v-col cols="12" md="4">
+                  <div
+                    v-if="objetodatos.articulo.alergenos.length > 0"
+                    class="d-flex justify-space-around rounded grey lighten-3 alergenos"
+                  >
+                    <v-icon
+                      v-for="alergeno in objetodatos.articulo.alergenos"
+                      :key="alergeno"
+                    >
                       {{ alergeno }}
                     </v-icon>
                   </div>
@@ -60,14 +66,23 @@
                 </v-col>
               </v-row>
               <v-row justify="center" class="text-center">
-                <v-col cols="6" class="grey lighten-2 usuario" @click="redirect">
+                <v-col
+                  cols="12"
+                  md="6"
+                  class="grey lighten-2 usuario"
+                  @click="redirect"
+                >
                   <v-row>
                     <v-col cols="4">
                       <h2>{{ objetodatos.propietario.nombre }}</h2>
                     </v-col>
-                    <v-col cols="4" class="d-flex align-content-center justify-center">
+                    <v-col
+                      cols="4"
+                      class="d-flex align-content-center justify-center"
+                    >
                       <h2>
-                        {{ objetodatos.propietario.likes }}<v-icon size="30">
+                        {{ objetodatos.propietario.likes
+                        }}<v-icon size="30">
                           mdi-star
                         </v-icon>
                       </h2>
@@ -75,7 +90,9 @@
                     <v-col cols="4">
                       <v-avatar>
                         <img
-                          :src="`http://localhost:4000/resources/users/${objetodatos.propietario.foto}?width=50&height=50`"
+                          :src="
+                            `http://localhost:4000/resources/users/${objetodatos.propietario.foto}?width=50&height=50`
+                          "
                           alt="Foto"
                         >
                       </v-avatar>
@@ -83,7 +100,10 @@
                   </v-row>
                 </v-col>
               </v-row>
-              <div v-if="objetodatos.propietario._id === this.$auth.user._id" class="text-center pa-3">
+              <div
+                v-if="objetodatos.propietario._id === this.$auth.user._id"
+                class="text-center pa-3"
+              >
                 <v-btn color="red" dark @click="borrar">
                   BORRAR
                 </v-btn>
@@ -96,9 +116,7 @@
         </v-col>
       </v-row>
     </div>
-    <v-footer
-      class="font-weight-medium primary"
-    >
+    <v-footer class="font-weight-medium primary">
       <div class="text-center white--text footer-center">
         {{ new Date().getFullYear() }} — <strong>Fid!</strong>
       </div>
@@ -129,7 +147,9 @@ export default {
         confirmButtonText: '¡Sí, bórralo!'
       }).then(async (result) => {
         if (result.value) {
-          const resp = await this.$axios.delete('/articulos/' + this.$route.params.articulo)
+          const resp = await this.$axios.delete(
+            '/articulos/' + this.$route.params.articulo
+          )
           if (resp.status === 200) {
             this.$swal(
               '¡Borrado!',
@@ -145,22 +165,31 @@ export default {
       this.$router.push('/usuarios/' + this.objetodatos.propietario._id)
     },
     redirectToChat () {
-      this.$router.push({ name: 'chat', params: { user: { foto: this.objetodatos.propietario.foto, id: this.objetodatos.propietario._id, nombre: this.objetodatos.propietario.nombre } } })
+      this.$router.push({
+        name: 'chat',
+        params: {
+          user: {
+            foto: this.objetodatos.propietario.foto,
+            id: this.objetodatos.propietario._id,
+            nombre: this.objetodatos.propietario.nombre
+          }
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-.footer-center{
-    width: 100%;
+.footer-center {
+  width: 100%;
 }
-.alergenos{
-    height: 3em;
-    border-radius: 30px;
+.alergenos {
+  height: 3em;
+  border-radius: 30px;
 }
-.usuario{
-    border-radius: 30px;
-    cursor: pointer;
+.usuario {
+  border-radius: 30px;
+  cursor: pointer;
 }
 </style>

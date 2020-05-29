@@ -45,8 +45,15 @@
             </p>
           </v-card>
         </v-col>
-        <v-col cols="9">
+        <v-col cols="12" md="9">
           <Conversacion v-if="conversaciones" :senderinfo="conversaciones" :mensajes="mensajes" @mensajenuevo="OnMensajeNuevo" />
+          <div v-else class="d-flex justify-center">
+            <v-row justify="center">
+              <v-col cols="3" md="4">
+                <v-img src="chat.svg" alt="chats" />
+              </v-col>
+            </v-row>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -69,6 +76,10 @@ export default {
       this.items.map((u) => {
         if (u.id === data.sender._id) {
           u.lastMessage = data.message
+          u.lastMessageSender = false
+          if (this.conversaciones != null) {
+            u.seen = this.conversaciones.id === data.sender._id
+          } else { u.seen = false }
         }
       })
     }

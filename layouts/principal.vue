@@ -17,7 +17,7 @@
         </v-toolbar-title>
 
         <v-spacer />
-        <v-btn v-if="this.$auth.user.rol === 'ADMIN'" to="admin" color="red">
+        <v-btn v-if="this.$auth.user.rol === 'ADMIN'" to="/admin" color="red">
           ADMIN
         </v-btn>
 

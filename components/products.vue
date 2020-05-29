@@ -30,8 +30,11 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-container v-if="cards.length === 0">
-        Vaya vaya... parece que no hay artículos aún
+      <v-container v-if="cards.length === 0" class="text-center">
+        <p>
+          Vaya vaya... parece que no hay artículos aún
+        </p>
+        <img src="~/assets/articulo_not_found.svg" height="200">
       </v-container>
     </v-card>
   </div>

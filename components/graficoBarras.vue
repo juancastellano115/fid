@@ -42,6 +42,15 @@ export default {
         ],
         borderWidth: 1
       }]
+    }, {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+
     })
   }
 }

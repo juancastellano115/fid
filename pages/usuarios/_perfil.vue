@@ -2,8 +2,8 @@
   <div>
     <div>
       <v-row>
-        <v-col sm="12" md="6" offset-sm="3">
-          <v-card class="grey lighten-4 pa-3 ma-5" elevation="20">
+        <v-col cols="12" md="6" offset-sm="3">
+          <v-card class="grey lighten-4 pa-3 ma-5 mb-12" elevation="20">
             <v-container fluid class="text-center">
               <v-avatar size="120">
                 <img
@@ -17,9 +17,12 @@
               <v-btn v-if="objetodatos.perfil._id != this.$auth.user._id && !starred" color="primary" @click="like">
                 STAR
               </v-btn>
+              <v-btn v-if="objetodatos.perfil._id === this.$auth.user._id" to="editarPerfil" color="primary" class="mt-4">
+                EDITAR PERFIL
+              </v-btn>
             </v-container>
             <p class="display-1">
-              Articulos
+              Artículos
             </p>
             <Products :cards="objetodatos.articulos" :cargando="false" />
           </v-card>
@@ -28,6 +31,7 @@
     </div>
     <v-footer
       class="font-weight-medium primary"
+      absolute
     >
       <div class="text-center white--text footer-center">
         {{ new Date().getFullYear() }} — <strong>Fid!</strong>

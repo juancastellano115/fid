@@ -155,6 +155,7 @@ import GraficoArea from '../components/graficoArea'
 import GraficoLinea from '../components/graficoLinea'
 import Tabla from '../components/tabla'
 export default {
+  middleware: 'admin',
   layout: 'adminLayout',
   components: {
     GraficoBarras,
@@ -190,9 +191,7 @@ export default {
     })
     this.estadisticas.articulosHoy.forEach((r) => {
       this.countArticulos.push(r.count)
-      let fecha = new Date(r.date)
-      fecha = fecha.toLocaleTimeString()
-      this.labelsArticulos.push(fecha)
+      this.labelsArticulos.push(r.date)
     })
   },
   methods: {
@@ -238,21 +237,30 @@ export default {
           bodyTabla.push(Object.values(user))
         })
         const img = new Image()
-        img.src = '/fidlogo.png'
-        doc.addImage(img, 'png', 14, 0, 30, 30)
+        img.src = '/fid.jpg'
+        doc.addImage(img, 'jpg', 14, 0, 30, 30)
         doc.text('Estadísticas Fid!', 14, 30)
 
         doc.text('Artículos totales: ' + this.estadisticas.numArticulos, 14, 50)
         doc.line(14, 60, 60, 60)
         doc.text('Usuarios totales: ' + this.estadisticas.numUsuarios, 14, 70)
         doc.line(14, 80, 60, 80)
-        doc.text('Mejores usuarios: ', 14, 90)
+        doc.text('Usuario con más estrellas: ' + this.estadisticas.usuarioConMasEstrellas.nombre + ' con ' + this.estadisticas.usuarioConMasEstrellas.likes + ' estrellas', 14, 90)
+        doc.line(14, 100, 60, 100)
+        doc.text('Estadísticas de género: ', 14, 110)
+        let counter = 110
+        for (const iterator of this.estadisticas.generos) {
+          counter += 10
+          doc.text(iterator._id == null ? 'Sin especificar : ' + iterator.count : iterator._id + ' : ' + iterator.count, 14, counter)
+        }
+        doc.line(14, 150, 60, 150)
+        doc.text('Mejores usuarios: ', 14, 160)
         doc.autoTable({
           head: [['Likes', 'Rol', 'Nombre', 'Email', 'Género', 'Registro']],
           body: bodyTabla,
-          startY: 100
+          startY: 170
         })
-        doc.text('Fid 2020 ©', 14, 200)
+        doc.text('Fid! 2020 ©', 14, 270)
         doc.save('estadisticas.pdf')
       }
     },

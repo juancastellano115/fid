@@ -24,7 +24,7 @@ export default {
         data: this.data,
         borderColor: '#3e95cd',
         fill: false,
-        label: 'Articulos'
+        label: 'Articulos esta semana'
       }
       ]
     }

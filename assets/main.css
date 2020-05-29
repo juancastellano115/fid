@@ -15,3 +15,6 @@
 .layout-leave-to {
   opacity: 0;
 }
+.swal2-title, .swal2-actions, .swal2-content {
+  font-family: Roboto, Arial, sans-serif;
+}
