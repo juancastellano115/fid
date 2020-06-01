@@ -2,7 +2,7 @@
   <v-content>
     <v-container class="fill-height" fluid>
       <v-row class="text-center justify-center">
-        <v-col cols="5">
+        <v-col cols="12" md="5">
           <div v-if="!mostrar" key="1">
             <h1>¡Muy bien {{ loggedInUser.nombre }}!</h1>
             <img src="~/assets/cara.svg" class="cara">

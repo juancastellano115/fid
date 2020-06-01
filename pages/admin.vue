@@ -215,10 +215,7 @@ export default {
           title: 'Artículo borrado',
           type: 'success'
         })
-        this.articulosdeusuario = this.articulosdeusuario.slice(
-          index,
-          index - 1
-        )
+        this.articulosdeusuario.splice(index, 1)
       } else {
         this.$swal({
           title: 'Hubo un error',
