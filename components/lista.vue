@@ -47,6 +47,7 @@
 </template>
 <script>
 export default {
+  // componente para crear una lista de usuarios y su último mensaje en la pantalla de chats
   data () {
     return {
       items: null

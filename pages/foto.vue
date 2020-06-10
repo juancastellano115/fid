@@ -41,6 +41,7 @@
 import { mapGetters } from 'vuex'
 import Robots from '../components/robots'
 export default {
+  // página para subir la foto del usuario al servidor
   components: {
     Robots
   },

@@ -24,7 +24,7 @@
 
 <script>
 export default {
-
+// skeleton loader para los artículos
 }
 </script>
 

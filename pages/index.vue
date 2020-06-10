@@ -51,7 +51,7 @@
       </svg>
     </section>
     <v-row>
-      <v-col sm="12" md="6" offset-sm="3">
+      <v-col sm="12" md="6" class="ma-auto">
         <Products :cards="cards" :cargando="cargando" />
         <client-only>
           <infinite-loading
@@ -91,6 +91,7 @@
 import { mapGetters } from 'vuex'
 import Products from '../components/products'
 export default {
+  // página principal con los artículos y la búsqueda
   layout: 'principal',
   middleware: 'auth',
   components: {

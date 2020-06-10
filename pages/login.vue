@@ -42,6 +42,7 @@
 </template>
 <script>
 export default {
+  // página de login
   middleware: 'guest',
   data () {
     return {

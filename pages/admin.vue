@@ -155,6 +155,7 @@ import GraficoArea from '../components/graficoArea'
 import GraficoLinea from '../components/graficoLinea'
 import Tabla from '../components/tabla'
 export default {
+  // página del administrador
   middleware: 'admin',
   layout: 'adminLayout',
   components: {
@@ -202,8 +203,15 @@ export default {
           { email: this.usuario }
         )
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error.response.data)
+        this.$swal({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          type: 'error',
+          title: 'Usuario no encontrado.'
+        })
       }
     },
     async borrarArticulo (index) {

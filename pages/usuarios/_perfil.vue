@@ -2,7 +2,7 @@
   <div>
     <div>
       <v-row>
-        <v-col cols="12" md="6" offset-sm="3">
+        <v-col cols="12" md="6" class="ma-auto pa-0">
           <v-card class="grey lighten-4 pa-3 ma-5 mb-12" elevation="20">
             <v-container fluid class="text-center">
               <v-avatar size="120">
@@ -43,6 +43,7 @@
 <script>
 import Products from '../../components/products'
 export default {
+  // esta página es la que muestra el perfil de un usuario
   layout: 'principal',
   middleware: 'auth',
   components: {

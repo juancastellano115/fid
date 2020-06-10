@@ -22,6 +22,7 @@
 
 <script>
 export default {
+  // layout para la página de admin
   theme: { dark: true },
   methods: {
     async logout () {

@@ -13,7 +13,6 @@
                   <h1>Registro</h1>
                   <v-form
                     v-model="valid"
-                    lazy-validation
                     @submit.prevent="register"
                   >
                     <v-text-field v-model="nombre" label="Nombre" name="nombre" type="text" :rules="nameRules" />
@@ -33,7 +32,7 @@
                       name="password"
                       type="password"
                     />
-                    <v-checkbox label="Acepto los términos y condiciones" :rules="checkRules" />
+                    <v-checkbox id="check" name="check" label="Acepto los términos y condiciones" :rules="checkRules" />
                     <v-container class="text-center">
                       <v-btn type="sumbit" outlined large color="orange">
                         ENVIAR
@@ -56,6 +55,7 @@
 </template>
 <script>
 export default {
+  // página de registro
   middleware: 'guest',
   data () {
     return {

@@ -1,7 +1,7 @@
 <template>
   <v-content>
-    <v-container fluid>
-      <v-row justify="center" class="expand">
+    <v-container>
+      <v-row justify="center">
         <v-col cols="12" md="3">
           <v-card
             max-width="450"
@@ -33,7 +33,7 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-icon>
-                    <v-icon v-if="item.seen==false" color="red">
+                    <v-icon v-if="item.seen==false && item.lastMessageSender==false" color="red">
                       mdi-circle
                     </v-icon>
                   </v-list-item-icon>
@@ -47,10 +47,10 @@
         </v-col>
         <v-col cols="12" md="9">
           <Conversacion v-if="conversaciones" :senderinfo="conversaciones" :mensajes="mensajes" @mensajenuevo="OnMensajeNuevo" />
-          <div v-else class="d-flex justify-center">
+          <div v-else>
             <v-row justify="center">
-              <v-col cols="3" md="4">
-                <v-img src="chat.svg" alt="chats" />
+              <v-col cols="3" md="4" class="d-flex justify-center">
+                <img width="300" src="chat.svg" alt="chats">
               </v-col>
             </v-row>
           </div>
@@ -62,6 +62,7 @@
 <script>
 import Conversacion from '../components/conversacion'
 export default {
+  // página de los chats
   layout: 'principal',
   middleware: 'auth',
   components: {
@@ -96,13 +97,13 @@ export default {
   },
   mounted () {
     this.$socket.client.emit('user_chat_connected', this.$auth.user._id)
-    if (this.$route.params.user) {
+    if (this.$route.params.user && !this.$auth.user.chats.includes(this.$route.params.user.id)) {
       let repeat = false
       for (const iterator of this.items) {
         if (iterator.id === this.$route.params.user.id) { repeat = true }
       }
       if (!repeat) {
-        this.items.push(this.$route.params.user)
+        this.items.unshift(this.$route.params.user)
       }
       this.conversaciones = this.$route.params.user
     }

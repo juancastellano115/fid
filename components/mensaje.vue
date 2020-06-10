@@ -8,6 +8,7 @@
 </template>
 <script>
 export default {
+  // componente que identifica si un mensaje es del destinatario o su emisor y se coloca/colorea según esta información
   props: {
     mensaje: {
       type: Object,

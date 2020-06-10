@@ -43,7 +43,7 @@
           </v-btn>
         </v-menu>
       </v-app-bar>
-      <v-container fluid pa-0>
+      <v-container fluid pt-0>
         <nuxt />
       </v-container>
     </v-content>
@@ -51,6 +51,7 @@
 </template>
 <script>
 export default {
+  // layout principal para toda la aplicación
   methods: {
     async logout () {
       await this.$auth.logout()

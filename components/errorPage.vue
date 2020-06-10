@@ -26,7 +26,6 @@ export default {
             'https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js',
           callback: () => {
             if (process.client) {
-            // Wrap every letter in a span
               const textWrapper = document.querySelector('.ml3')
               textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>")
 

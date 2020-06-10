@@ -60,6 +60,7 @@ export default {
     }
   },
   methods: {
+    // método que manda un mensaje a un destinatario
     async send () {
       if (this.mensaje) {
         const objetoMensaje = { sender: this.$auth.user._id, receiver: this.senderinfo.id, message: this.mensaje, createdAt: new Date() }
@@ -67,12 +68,14 @@ export default {
         this.$socket.client.emit('send_message', objetoMensaje)
         this.$emit('mensajenuevo', { mensaje: this.mensaje, id: this.senderinfo.id })
         this.mensaje = ''
-        this.scrollToBottom()
       }
     },
-    scrollToBottom () {
-      const container = this.$el.querySelector('#messages')
-      container.scrollTop = container.scrollHeight
+    // método para hacer scroll al fondo del contenedor de mensajes
+    async scrollToBottom () {
+      if (process.browser) {
+        const container = await document.getElementById('messages')
+        container.scrollTop = await container.scrollHeight
+      }
     }
   }
 }

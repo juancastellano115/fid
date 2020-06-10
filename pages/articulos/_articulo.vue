@@ -2,8 +2,8 @@
   <div>
     <div>
       <v-row>
-        <v-col cols="12" md="6" offset-sm="3">
-          <v-card class="grey lighten-4 pa-3 ma-sm-0 ma-md-5" elevation="20">
+        <v-col cols="12" md="6" class="ma-auto">
+          <v-card class="grey lighten-4 pa-3 ma-sm-0 ma-md-10" elevation="20">
             <v-container fluid>
               <v-carousel cycle hide-delimiter-background show-arrows-on-hover>
                 <v-carousel-item
@@ -116,7 +116,10 @@
         </v-col>
       </v-row>
     </div>
-    <v-footer class="font-weight-medium primary">
+    <v-footer
+      class="font-weight-medium primary"
+      absolute
+    >
       <div class="text-center white--text footer-center">
         {{ new Date().getFullYear() }} — <strong>Fid!</strong>
       </div>
@@ -126,6 +129,7 @@
 
 <script>
 export default {
+  // esta página es la que se muestra al dar click en un artículo
   layout: 'principal',
   middleware: 'auth',
   async asyncData ({ $axios, params }) {

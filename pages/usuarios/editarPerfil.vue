@@ -77,6 +77,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+  // página para editar el perfil del usuario
   layout: 'principal',
   data () {
     return {
@@ -113,7 +114,7 @@ export default {
       if (this.password) {
         formData.append('password', this.password)
       }
-      if (this.file) {
+      if (this.foto) {
         formData.append('file', this.foto, this.foto.name)
       }
       try {

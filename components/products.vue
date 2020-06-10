@@ -43,6 +43,7 @@
 <script>
 import ProductLoader from './productLoader'
 export default {
+  // componente para cargar los productos según un array JSON
   components: {
     ProductLoader
   },

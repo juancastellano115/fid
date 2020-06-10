@@ -15,6 +15,7 @@
 <script>
 import robotAnimation from './robotAnimation'
 export default {
+  // este componente se encarga de hacer la petición a la inteligencia artificial del servidor
   name: 'Robots',
   components: {
     robotAnimation

@@ -21,7 +21,7 @@
             placeholder="(No te pases)"
             class="precio"
           />
-          <p>Descripcción</p>
+          <p>Descripción</p>
           <v-textarea
             v-model="desc"
             solo
@@ -101,6 +101,7 @@
 
 <script>
 export default {
+  // página para subir o editar un artículo
   middleware: 'auth',
   layout: 'principal',
   data () {
