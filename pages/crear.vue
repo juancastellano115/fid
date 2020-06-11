@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-form v-model="valid" lazy-validation @submit.prevent="enviar">
+    <v-form v-model="valid" @submit.prevent="enviar">
       <v-card
         class="mx-auto mt-8"
         max-width="680"

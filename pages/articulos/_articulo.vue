@@ -61,7 +61,7 @@
                     </v-icon>
                   </div>
                   <div v-else class="text-center text--secondary">
-                    ¡Sin alergenos!
+                    ¡Sin alérgenos!
                   </div>
                 </v-col>
               </v-row>
