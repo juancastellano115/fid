@@ -59,7 +59,7 @@ export default {
     }
   },
   methods: {
-
+    // manda una petición al servidor y redirige a la pantalla principal
     async login () {
       if (this.valid) {
         try {

@@ -49,6 +49,7 @@ export default {
   components: {
     Products
   },
+  // prefetch
   async asyncData ({ $axios, params }) {
     const objetodatos = await $axios.$get('/articulos?id=' + params.perfil)
     return { objetodatos }
@@ -58,6 +59,7 @@ export default {
       starred: false
     }
   },
+  // comprobamos que el usuario no ha dado ya la estrella a ese usuario
   created () {
     if (this.$auth.user.likesOtorgados.includes(this.objetodatos.perfil._id)) {
       // eslint-disable-next-line no-console

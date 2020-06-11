@@ -164,6 +164,7 @@ export default {
     GraficoLinea,
     Tabla
   },
+  // prefetch
   async asyncData ({ $axios }) {
     const estadisticas = await $axios.$get('/estadisticas/')
     return { estadisticas }
@@ -181,6 +182,7 @@ export default {
       usuarioParaAdmin: ''
     }
   },
+  // para generar los gráficos
   created () {
     this.estadisticas.registros.forEach((r) => {
       this.countRegistros.push(r.count)
@@ -196,6 +198,7 @@ export default {
     })
   },
   methods: {
+    // obtener artículos de un usuario
     async seleccionarUser () {
       try {
         this.articulosdeusuario = await this.$axios.$post(
@@ -231,6 +234,7 @@ export default {
         })
       }
     },
+    // método para generar el pdf con JSpdf
     generarPDF () {
       if (process.browser) {
         const JsPDF = require('jspdf')
@@ -260,6 +264,7 @@ export default {
         }
         doc.line(14, 150, 60, 150)
         doc.text('Mejores usuarios: ', 14, 160)
+        // creamos la tabla
         doc.autoTable({
           head: [['Likes', 'Rol', 'Nombre', 'Email', 'Género', 'Registro']],
           body: bodyTabla,

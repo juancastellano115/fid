@@ -112,6 +112,7 @@ export default {
     ...mapGetters(['loggedInUser'])
   },
   created () {
+    // si el usuario tiene ciudad predeterminada en su perfil la cargamos
     this.cargando = true
     if (this.loggedInUser.ciudad) {
       this.ciudad = this.loggedInUser.ciudad
@@ -151,6 +152,7 @@ export default {
       this.updateURLParameter(this.url, 'search', this.busqueda == null ? '' : this.busqueda)
       this.cards = await this.$axios.$get(this.url)
     },
+    // manejador del scroll infinito
     infiniteScroll ($state) {
       setTimeout(() => {
         this.contadorScroll++

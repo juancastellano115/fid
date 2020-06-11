@@ -69,11 +69,13 @@ export default {
     Conversacion
   },
   sockets: {
+    // handler de mensaje recibido
     messageReceived (data) {
       if (data.isFirstMessage) {
         const sender = data.sender
         this.items.unshift({ id: sender._id, foto: sender.foto, nombre: sender.nombre, seen: false })
       }
+      // mapeo de los usuarios para asignar el mensaje recibido
       this.items.map((u) => {
         if (u.id === data.sender._id) {
           u.lastMessage = data.message
@@ -85,6 +87,7 @@ export default {
       })
     }
   },
+  // prefetch
   async asyncData ({ $axios }) {
     const items = await $axios.$get('/chat/conversaciones/')
     return { items }
@@ -96,7 +99,9 @@ export default {
     }
   },
   mounted () {
+    // emitimos al servidor que nos hemos conectado al chat
     this.$socket.client.emit('user_chat_connected', this.$auth.user._id)
+    // si venimos de la pantalla de artículo comprobamos que no se repite el chat
     if (this.$route.params.user && !this.$auth.user.chats.includes(this.$route.params.user.id)) {
       let repeat = false
       for (const iterator of this.items) {
@@ -109,13 +114,14 @@ export default {
     }
   },
   methods: {
+    // para mostrar una conversación al hacer click
     async setConversation (index) {
       this.conversaciones = this.items[index]
       const obj = {
         sender: this.conversaciones.id,
         receiver: this.$auth.user._id
       }
-
+      // mandamos que la conversación ha sido vista
       if (!this.conversaciones.seen && this.conversaciones.lastMessageSender === false) {
         this.items[index].seen = true
         this.$axios.post('/chat/seen', obj)
@@ -123,6 +129,7 @@ export default {
       const msjs = await this.$axios.$post('http://localhost:4000/api/chat/specificConversation', obj)
       this.mensajes = msjs.message
     },
+    // handler al escribir un mensaje desde el componente conversación
     OnMensajeNuevo (data) {
       this.items.map((u) => {
         if (u.id === data.id) {

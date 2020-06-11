@@ -106,6 +106,7 @@ export default {
       }
     },
     async enviar () {
+      // enviamos los datos al servidor para actualizar los parámetros que hayan cambiado del perfil
       const formData = new FormData()
       formData.append('nombre', this.nombre)
       formData.append('genero', this.genero)
@@ -132,6 +133,7 @@ export default {
           })
         }
       } catch (error) {
+        // si por ejemplo el usuario introduce un correo no válido
         this.$swal({
           title: 'Error al actualizar el perfil',
           text: 'Revisa todos los campos y vuelve a intentarlo.',

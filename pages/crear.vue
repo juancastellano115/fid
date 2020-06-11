@@ -121,6 +121,7 @@ export default {
     }
   },
   mounted () {
+    // si la ruta es para actualizar cargamos los datos del producto a modificar
     if (this.$route.params.nombre) {
       const articulo = this.$route.params
       this.nombre = articulo.nombre
@@ -145,6 +146,8 @@ export default {
         formData.append('ciudad', this.ciudad)
         formData.append('alergenos', JSON.stringify(this.alergenos))
         let resp = null
+        // dependiendo de si queremos actualizar el artículo o crearlo
+        // usaremos una url u otra
         if (!this.actualizar) {
           resp = await this.$axios.post('/articulos', formData)
         } else {
